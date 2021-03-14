@@ -3,9 +3,33 @@ package com.tylerkindy.lox;
 import static com.tylerkindy.lox.TokenType.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 class Scanner {
+  private static final Map<String, TokenType> keywords;
+
+  static {
+    keywords = new HashMap<>();
+    keywords.put("and", AND);
+    keywords.put("class", CLASS);
+    keywords.put("else", ELSE);
+    keywords.put("false", FALSE);
+    keywords.put("for", FOR);
+    keywords.put("fun", FUN);
+    keywords.put("if", IF);
+    keywords.put("nil", NIL);
+    keywords.put("or", OR);
+    keywords.put("print", PRINT);
+    keywords.put("return", RETURN);
+    keywords.put("super", SUPER);
+    keywords.put("this", THIS);
+    keywords.put("true", TRUE);
+    keywords.put("var", VAR);
+    keywords.put("while", WHILE);
+  }
+
   private final String source;
   private final List<Token> tokens = new ArrayList<>();
   private int start = 0;
@@ -178,7 +202,10 @@ class Scanner {
   private void identifier() {
     while (isAlphaNumeric(peek())) advance();
 
-    addToken(IDENTIFIER);
+    String text = source.substring(start, current);
+    TokenType type = keywords.get(text);
+    if (type == null) type = IDENTIFIER;
+    addToken(type);
   }
 
   private boolean isAlpha(char c) {
