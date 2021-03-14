@@ -17,4 +17,15 @@ class ScannerTest {
         )
       );
   }
+
+  @Test
+  void identifiers() {
+    assertThat(new Scanner("foo").scanTokens())
+      .isEqualTo(
+        List.of(
+          new Token(TokenType.IDENTIFIER, "foo", null, 1),
+          new Token(TokenType.EOF, "", null, 1)
+        )
+      );
+  }
 }
