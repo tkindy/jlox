@@ -32,9 +32,17 @@ class ScannerTest {
   @Test
   void keywords() {
     assertThat(new Scanner("and").scanTokens())
-      .isEqualTo(List.of(
-        new Token(TokenType.AND, "and", null, 1)
-        , new Token(TokenType.EOF, "", null, 1)
-      ));
+      .isEqualTo(
+        List.of(
+          new Token(TokenType.AND, "and", null, 1),
+          new Token(TokenType.EOF, "", null, 1)
+        )
+      );
+  }
+
+  @Test
+  void blockComments() {
+    assertThat(new Scanner("/*\ntesting\ntesting testing\n*/").scanTokens())
+      .isEqualTo(List.of(new Token(TokenType.EOF, "", null, 4)));
   }
 }
