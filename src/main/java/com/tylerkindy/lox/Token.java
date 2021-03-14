@@ -1,5 +1,7 @@
 package com.tylerkindy.lox;
 
+import java.util.Objects;
+
 class Token {
   final TokenType type;
   final String lexeme;
@@ -14,7 +16,37 @@ class Token {
   }
 
   @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Token token = (Token) o;
+    return (
+      line == token.line &&
+      type == token.type &&
+      Objects.equals(lexeme, token.lexeme) &&
+      Objects.equals(literal, token.literal)
+    );
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(type, lexeme, literal, line);
+  }
+
+  @Override
   public String toString() {
-    return type + " " + lexeme + " " + literal;
+    return (
+      "Token{" +
+      "type=" +
+      type +
+      ", lexeme='" +
+      lexeme +
+      '\'' +
+      ", literal=" +
+      literal +
+      ", line=" +
+      line +
+      '}'
+    );
   }
 }
